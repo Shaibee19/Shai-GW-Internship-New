@@ -1,17 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Slider from "react-slick";
 
 const HotCollections = () => {
 
   const [apiData, setApiData] = useState([]);
-  const cardsRef = useRef();
-
-  const handleWheel = (event) => {
-    event.preventDefault();
-    cardsRef.current.scrollLeft += event.deltaY;
+  const settings = {
+    dots: true,
+    lazyLoad: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
   };
-
+  
   async function fetchData() {
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`
@@ -20,10 +23,7 @@ const HotCollections = () => {
   }
 
   useEffect(() => {
-
     fetchData();
-
-    // cardsRef.current.addEventListener("wheel", handleWheel);
   }, []);
   
   return (
@@ -36,6 +36,7 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          <Slider {...settings}>
           {apiData.map((id, index) => (
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
               <div className="nft_coll">
@@ -59,8 +60,9 @@ const HotCollections = () => {
               </div>
             </div>
           ))}
-        </div>
-      </div>
+          </Slider>
+          </div>
+          </div>
     </section>
   );
 };
