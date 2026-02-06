@@ -1,10 +1,11 @@
 import React, { lazy, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Slider from "react-slick";
+import OwlCarousel from 'react-owl-carousel';
+// import 'owl.carousel/dist/assets/owl.carousel.css';
+// import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const HotCollections = () => {
-
   const [apiData, setApiData] = useState([]);
   const settings = {
     dots: true,
@@ -24,6 +25,19 @@ const HotCollections = () => {
 
   useEffect(() => {
     fetchData();
+    // $(".owl-carousel").owlCarousel({ 
+    //   loop: true, 
+    //   margin: 10, 
+    //   nav: true, 
+    //   dots: false, 
+    //   autoplay: true, 
+    //   autoplayTimeout: 3000, 
+    //   responsive: { 
+    //     0: { items: 1 }, 
+    //     600: { items: 3 }, 
+    //     1000: { items: 5 } 
+    //   } 
+    // });
   }, []);
   
   return (
@@ -36,7 +50,7 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <Slider {...settings}>
+          <OwlCarousel className='owl-theme' loop margin={10} nav>
           {apiData.map((id, index) => (
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
               <div className="nft_coll">
@@ -60,7 +74,7 @@ const HotCollections = () => {
               </div>
             </div>
           ))}
-          </Slider>
+          </OwlCarousel>
           </div>
           </div>
     </section>
